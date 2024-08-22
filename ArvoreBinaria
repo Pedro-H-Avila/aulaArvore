@@ -1,0 +1,16 @@
+public class ArvoreBinaria {
+
+public boolean vazia() {
+  if (raiz == null) {
+    return true;
+  }else {
+    return false;
+
+    }
+  }
+public No inserirNovo ( No novo, No raiz) { 
+
+
+}
+
+}
