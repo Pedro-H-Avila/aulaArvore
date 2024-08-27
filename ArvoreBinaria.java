@@ -1,12 +1,10 @@
 public class ArvoreBinaria {
-
+  No raiz;
+ArvoreBinaria(){
+  raiz = null;
+}
 public boolean vazia() {
-  if (raiz == null) {
-    return true;
-  }else {
-    return false;
-
-    }
+    return raiz == null;
   }
 
 private No InserirNovo(No novo, No atual)  {
