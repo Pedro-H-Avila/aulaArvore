@@ -54,57 +54,56 @@ public class ArvoreBinaria {
         }
     }
 
-    public No encontrarElemento(No atual, int valor) {
+ public No encontrarElemento(No atual, int valor) {
     if (atual == null) {
-        return null; // Se o nó atual for nulo, o valor não está na árvore
+       return null; // Se o nó atual for nulo, o valor não está na árvore
     }
-9
     if (valor == atual.valor) {
-        return atual; // Se o valor for encontrado, retorna o nó atual
+          return atual; // Se o valor for encontrado, retorna o nó atual
     }
 
     if (valor < atual.valor) {
-        return encontrarElemento(atual.esquerda, valor); // Busca na subárvore esquerda
+          return encontrarElemento(atual.esquerda, valor); // Busca na subárvore esquerda
     } else {
-        return encontrarElemento(atual.direita, valor); // Busca na subárvore direita
+          return encontrarElemento(atual.direita, valor); // Busca na subárvore direita
     }
-}
+    }
 
 
 public boolean remover(int valor) {
   // caso 1
-    if (raiz == null) {
-        return false; // Árvore vazia
-    }
+  if (raiz == null) {
+      return false; // Árvore vazia
+   }
 
     No pai;
     No noX = raiz;
 
-    // Encontrar o nó a ser removido (noX) e seu pai
+  // Encontrar o nó a ser removido (noX) e seu pai
     while (noX != null && noX.valor != valor) {
         pai = noX;
-        if (valor < noX.valor) {
+      if (valor < noX.valor) {
             noX = noX.esquerda;
-        } else {
-            noX = noX.direita;
-        }
+      } else {
+          noX = noX.direita;
+      }
     }
 
     // Se noX for nulo, o valor não foi encontrado
-    if (noX == null) {
+  if (noX == null) {
         return false;
-    }
+  }
 
-    // Caso 1: Nó folha (sem filhos)
-    if (noX.esquerda == null && noX.direita == null) {
-        if (noX == raiz) {
+  // Caso 1: Nó folha (sem filhos)
+  if (noX.esquerda == null && noX.direita == null) {
+    if (noX == raiz) {
             raiz = null; // A árvore tinha apenas um nó
-        } else if (pai.esquerda == noX) {
+    } else if (pai.esquerda == noX) {
             pai.esquerda = null;
-        } else {
+    } else {
             pai.direita = null;
-        }
     }
+  }
     // Caso 2: Um filho
     else if (noX.esquerda == null || noX.direita == null) {
         No filho = (noX.esquerda != null) ? noX.esquerda : noX.direita;
@@ -133,15 +132,56 @@ public boolean remover(int valor) {
         noX.valor = substituto.valor;
 
         // Ajustar as conexões (remoção do substituto)
-        if (paiSubstituto != noX) {
-            paiSubstituto.esquerda = substituto.direita;
-        } else {
-            paiSubstituto.direita = substituto.direita;
-        }
-    }
+      if (paiSubstituto != noX) {
+          paiSubstituto.esquerda = substituto.direita;
+      } else {
+          paiSubstituto.direita = substituto.direita;
+      }
+  }
 
     return true;
 }
+  private No inserirNovo (No novo, No atual){
+    if (atual == null) {
+      return novo;
+    }
+    //Faz a orintação da procura do valor a ser inserido a esquerda
+    if ( novo.valor < atual.valor ) {
+      atual.esquerda = inserirNovo(novo, atual.esquerda);
+    //Em caso contrário insere ao lado direiro
+    }else {
+      atual.direita = inserirNovo(novo, atual.direita);
+    }
+      return atual;
+}
+  public No inserir (No novo) {
 
+    if (novo == null){
+      throw new IllegalArgumentException("O nó não pode ser nulo");
+    }
+    //Chama o método recursivo para inserir o nó na árvore 
+      raiz = inserirNovo(novo, raiz);
+    
+  }
+  private No pesquisar (No atual, int valor) {
+    if (atual == null){
+      return null;
+    }
+    if (atual.valor == valor) {
+      return atual;
+    }
+    if (atual.valor < valor){
+     // return encontrarElemento(atual.direita, valor);
+     return pesquisar(atual.direita, valor);
+
+    }
+    // busca na arvore a esquerda
+     // return encontrarElemento(atual.esquerda, valor);
+      return pesquisar(atual.esquerda, valor);
+
+  }
+  public No pesquisar (int valor) {
+    return pesquisar (this.raiz, valor);
+  }
 
 }
